@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taskly — список дел</title>
+<meta name="theme-color" content="#3b5bfd">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Taskly">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="auth" class="auth" hidden>
+  <form id="authForm" class="panel">
+    <h1>Taskly</h1>
+    <p class="muted">Задачи, которые синхронизируются между устройствами</p>
+    <input id="au" placeholder="Логин" autocomplete="username" required>
+    <input id="ap" type="password" placeholder="Пароль, от 6 символов" autocomplete="current-password" required>
+    <p id="aerr" class="err"></p>
+    <div class="row"><button class="btn primary" data-mode="login">Войти</button><button class="btn" data-mode="register">Создать аккаунт</button></div>
+    <button type="button" id="guest" class="link">Продолжить без аккаунта</button>
+  </form>
+</main>
+
+<div id="app" class="app" hidden>
+  <aside class="side">
+    <div class="logo">Taskly</div>
+    <nav id="nav"></nav>
+    <h4>Теги</h4><div id="tags" class="tags"></div>
+    <h4>Прогресс</h4>
+    <div class="bar"><i id="bar"></i></div><p id="stats" class="muted"></p>
+    <div class="side-foot">
+      <button class="btn sm" id="exp">Экспорт</button>
+      <button class="btn sm" id="imp">Импорт</button>
+      <button class="btn sm" id="clr">Убрать выполненные</button>
+      <input type="file" id="file" accept=".json" hidden>
+    </div>
+  </aside>
+  <section class="main">
+    <header class="top">
+      <input id="search" type="search" placeholder="Поиск ( / )">
+      <select id="sort"><option value="manual">Вручную</option><option value="due">По сроку</option><option value="prio">По приоритету</option></select>
+      <button class="btn sm" id="theme" title="Сменить тему">Тема</button>
+      <button class="btn sm primary" id="install" hidden>Установить</button>
+      <span id="sync" class="muted"></span>
+      <button class="btn sm" id="acct"></button>
+    </header>
+    <input id="add" class="add" placeholder="Новая задача — Enter. Можно: #тег, !!! (приоритет), сегодня / завтра">
+    <ul id="list" class="list"></ul>
+    <p id="empty" class="muted center" hidden>Задач нет. Напишите первую в поле выше.</p>
+  </section>
+</div>
+
+<dialog id="dlg">
+  <form id="edit">
+    <h3>Задача</h3>
+    <input id="e_title" placeholder="Название" required>
+    <textarea id="e_note" placeholder="Заметка" rows="2"></textarea>
+    <div class="grid">
+      <label>Приоритет<select id="e_prio"><option value="0">Обычный</option><option value="1">Средний</option><option value="2">Высокий</option><option value="3">Срочный</option></select></label>
+      <label>Срок<input type="date" id="e_due"></label>
+      <label>Тег<input id="e_tag" placeholder="работа"></label>
+      <label>Повтор<select id="e_rep"><option value="">Нет</option><option value="1">Каждый день</option><option value="7">Каждую неделю</option><option value="30">Каждый месяц</option></select></label>
+    </div>
+    <label>Подзадачи, по одной на строку<textarea id="e_subs" rows="4"></textarea></label>
+    <div class="row"><button type="button" class="btn" id="e_cancel">Отмена</button><button class="btn primary">Сохранить</button></div>
+  </form>
+</dialog>
+<script src="app.js"></script>
+</body>
+</html>
